@@ -56,17 +56,10 @@ function createStatementData(invoice, plays){
 }
 
 function statement(invoice, plays) {
-    // let totalAmount = 0;
-    // let volumeCredits = 0;
     let result = `Statement for ${createStatementData(invoice, plays).customer}\n`;
     const format = priceFormat();
     for (let perf of createStatementData(invoice, plays).performances) {
-        //let {play, thisAmount} = calculateAmount(plays, perf);
-        // let thisAmount = calculateAmount(invoice.performances);
-        // volumeCredits = calculateCredits(volumeCredits, perf, play);
-        //print line for this order
         result += ` ${perf.play.name}: ${format(perf.amount / 100)} (${perf.audience} seats)\n`;
-        //totalAmount += thisAmount;
     }
     result += `Amount owed is ${format(createStatementData(invoice, plays).totalAmount / 100)}\n`;
     result += `You earned ${createStatementData(invoice, plays).volumeCredits} credits \n`;
