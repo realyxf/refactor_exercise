@@ -55,7 +55,8 @@ function createStatementData(invoice, plays){
     return result;
 }
 
-function statement(invoice, plays) {
+
+function printStatementText(invoice, plays) {
     let result = `Statement for ${createStatementData(invoice, plays).customer}\n`;
     const format = priceFormat();
     for (let perf of createStatementData(invoice, plays).performances) {
@@ -64,6 +65,10 @@ function statement(invoice, plays) {
     result += `Amount owed is ${format(createStatementData(invoice, plays).totalAmount / 100)}\n`;
     result += `You earned ${createStatementData(invoice, plays).volumeCredits} credits \n`;
     return result;
+}
+
+function statement(invoice, plays) {
+    return printStatementText(invoice, plays);
 }
 
 module.exports = {
