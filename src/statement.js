@@ -56,18 +56,18 @@ function createStatementData(invoice, plays){
 }
 
 
-function printStatementText(invoice, plays) {
-    let result = `Statement for ${createStatementData(invoice, plays).customer}\n`;
-    for (let perf of createStatementData(invoice, plays).performances) {
+function printStatementText(data) {
+    let result = `Statement for ${data.customer}\n`;
+    for (let perf of data.performances) {
         result += ` ${perf.play.name}: ${priceFormat(perf.amount)} (${perf.audience} seats)\n`;
     }
-    result += `Amount owed is ${priceFormat(createStatementData(invoice, plays).totalAmount)}\n`;
-    result += `You earned ${createStatementData(invoice, plays).volumeCredits} credits \n`;
+    result += `Amount owed is ${priceFormat(data.totalAmount)}\n`;
+    result += `You earned ${data.volumeCredits} credits \n`;
     return result;
 }
 
 function statement(invoice, plays) {
-    return printStatementText(invoice, plays);
+    return printStatementText(createStatementData(invoice, plays));
 }
 
 module.exports = {
