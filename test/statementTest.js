@@ -94,3 +94,24 @@ test('Case2 BigCo has one performance hamlet and the audience is 29', t => {
     //then
     t.is(result, expectResult);
 });
+
+test('Case3 BigCo has one performance hamlet and the audience is 31', t => {
+    //given
+    const invoice = {
+        'customer': 'BigCo',
+        'performances': [
+            {
+                'playID': 'hamlet',
+                'audience': 31,
+            }
+        ],
+    };
+    //when
+    const result = statement(invoice, plays);
+    const expectResult = 'Statement for BigCo\n'
+        + ` Hamlet: $410.00 (31 seats)\n`
+        + `Amount owed is $410.00\n`
+        + `You earned 1 credits \n`;
+    //then
+    t.is(result, expectResult);
+});
