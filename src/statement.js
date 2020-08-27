@@ -1,9 +1,9 @@
-function priceFormat() {
+function priceFormat(amount) {
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 2,
-    }).format;
+    }).format(amount/100);
 }
 
 function calculateAmount(performances) {
@@ -58,11 +58,10 @@ function createStatementData(invoice, plays){
 
 function printStatementText(invoice, plays) {
     let result = `Statement for ${createStatementData(invoice, plays).customer}\n`;
-    const format = priceFormat();
     for (let perf of createStatementData(invoice, plays).performances) {
-        result += ` ${perf.play.name}: ${format(perf.amount / 100)} (${perf.audience} seats)\n`;
+        result += ` ${perf.play.name}: ${priceFormat(perf.amount)} (${perf.audience} seats)\n`;
     }
-    result += `Amount owed is ${format(createStatementData(invoice, plays).totalAmount / 100)}\n`;
+    result += `Amount owed is ${priceFormat(createStatementData(invoice, plays).totalAmount)}\n`;
     result += `You earned ${createStatementData(invoice, plays).volumeCredits} credits \n`;
     return result;
 }
