@@ -146,3 +146,34 @@ test('Case4 BigCo has three performance and the audience more than 30', t => {
     //then
     t.is(result, expectResult);
 });
+
+test('Case5 BigCo has three performance and the audience less than 30', t => {
+    //given
+    const invoice = {
+        'customer': 'BigCo',
+        'performances': [
+            {
+                'playID': 'hamlet',
+                'audience': 22,
+            },
+            {
+                'playID': 'as-like',
+                'audience': 22,
+            },
+            {
+                'playID': 'othello',
+                'audience': 22,
+            },
+        ],
+    };
+    //when
+    const result = statement(invoice, plays);
+    const expectResult = 'Statement for BigCo\n'
+        + ` Hamlet: $400.00 (22 seats)\n`
+        + ` As You Like It: $476.00 (22 seats)\n`
+        + ` Othello: $400.00 (22 seats)\n`
+        + `Amount owed is $1,276.00\n`
+        + `You earned 4 credits \n`;
+    //then
+    t.is(result, expectResult);
+});
