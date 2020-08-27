@@ -6,7 +6,9 @@ function priceFormat() {
   }).format;
 }
 
-function calculateAmount(play, thisAmount, perf) {
+function calculateAmount(plays, perf) {
+  const play = plays[perf.playID];
+  let thisAmount = 0;
   switch (play.type) {
     case 'tragedy':
       thisAmount = 40000;
@@ -24,7 +26,7 @@ function calculateAmount(play, thisAmount, perf) {
       default:
         throw new Error(`unknown type: ${play.type}`);
   }
-  return thisAmount;
+  return {play, thisAmount};
 }
 
 function statement (invoice, plays) {
@@ -33,9 +35,7 @@ function statement (invoice, plays) {
   let result = `Statement for ${invoice.customer}\n`;
   const format = priceFormat();
   for (let perf of invoice.performances) {
-    const play = plays[perf.playID];
-    let thisAmount = 0;
-    thisAmount = calculateAmount(play, thisAmount, perf);
+    let {play, thisAmount} = calculateAmount(plays, perf);
     // add volume credits
     volumeCredits += Math.max(perf.audience - 30, 0);
     // add extra credit for every ten comedy attendees
